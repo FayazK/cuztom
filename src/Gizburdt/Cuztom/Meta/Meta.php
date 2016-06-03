@@ -198,8 +198,6 @@ abstract class Meta
      */
     public function __get($name)
     {
-        if(array_key_exists($name, $this->attributes)) {
-            return $this->attributes[$name];
-        }
+        return isset($this->attributes[$name]) ? $this->attributes[$name] : null;
     }
 }
