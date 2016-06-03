@@ -12,33 +12,15 @@ abstract class Meta
 {
     /**
      * ID.
-     * @var string
+     * @var [type]
      */
     public $id;
 
     /**
      * Callback.
-     * @var string
+     * @var [type]
      */
     public $callback;
-
-    /**
-     * Title.
-     * @var string
-     */
-    public $title;
-
-    /**
-     * Description.
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Fields.
-     * @var array
-     */
-    public $fields;
 
     /**
      * Data.
@@ -59,13 +41,18 @@ abstract class Meta
     public $meta_type;
 
     /**
+     * Attributes.
+     *
+     * @var [type]
+     */
+    protected $attributes;
+
+    /**
      * Fillable.
      *
      * @var array
      */
     protected $fillable = array(
-        'id',
-        'callback',
         'title',
         'description',
         'fields',
@@ -89,16 +76,16 @@ abstract class Meta
      * Construct for all meta types, creates title (and description).
      *
      * @param int   $id   Box ID
-     * @param array $data Array of fields
+     * @param array $args Array of fields
      * @since 1.6.4
      */
-    public function __construct($id, $data)
+    public function __construct($id, $args)
     {
         global $cuztom;
 
-        // Set all properties
-        foreach ($this->fillable as $property) {
-            $this->$property = isset($data[$property]) ? $data[$property] : $this->$property;
+        // Set all attributes
+        foreach ($this->fillable as $attribute) {
+            $this->$attribute = isset($args[$attribute]) ? $args[$attribute] : @$this->attributes[$attribute];
         }
 
         // Set hard
@@ -149,6 +136,28 @@ abstract class Meta
     }
 
     /**
+     * Check what kind of meta we're dealing with.
+     *
+     * @param  string $meta_type
+     * @return bool
+     * @since  2.3
+     */
+    public function is_meta_type($meta_type)
+    {
+        return $this->_meta_type == $meta_type;
+    }
+
+    /**
+     * Adds multipart support to form.
+     *
+     * @since 0.2
+     */
+    public function edit_form_tag()
+    {
+        echo ' enctype="multipart/form-data"';
+    }
+
+    /**
      * This method builds the complete array with the right key => value pairs.
      *
      * @param  array $fields
@@ -171,24 +180,26 @@ abstract class Meta
     }
 
     /**
-     * Check what kind of meta we're dealing with.
+     * Magic setter.
      *
-     * @param  string $meta_type
-     * @return bool
-     * @since  2.3
+     * @param string $name
+     * @param string $value
      */
-    public function is_meta_type($meta_type)
+    public function __set($name, $value)
     {
-        return $this->_meta_type == $meta_type;
+        $this->attributes[$name] = $value;
     }
 
     /**
-     * Adds multipart support to form.
+     * Magic getter.
      *
-     * @since 0.2
+     * @param  string $name
+     * @return mixed
      */
-    public static function edit_form_tag()
+    public function __get($name)
     {
-        echo ' enctype="multipart/form-data"';
+        if(array_key_exists($name, $this->attributes)) {
+            return $this->attributes[$name];
+        }
     }
 }

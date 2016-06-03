@@ -25,7 +25,7 @@ class Term extends Meta
      * Meta Type.
      * @var string
      */
-    public $_meta_type = 'term';
+    public $meta_type = 'term';
 
     /**
      * Construct the term meta.
@@ -42,8 +42,8 @@ class Term extends Meta
         parent::__construct($id, $data);
 
         // Set taxonomy/locations
-        $this->taxonomies   = (array) $taxonomy;
-        $this->locations    = (array) $locations;
+        $this->taxonomies = (array) $taxonomy;
+        $this->locations  = (array) $locations;
 
         // Build fields
         if (@$this->callback[0] == $this) {

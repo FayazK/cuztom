@@ -10,18 +10,6 @@ Guard::directAccess();
 class Box extends Meta
 {
     /**
-     * Context.
-     * @var string
-     */
-    public $context = 'normal';
-
-    /**
-     * Priority.
-     * @var string
-     */
-    public $priority = 'default';
-
-    /**
      * Post types.
      * @var string|array
      */
@@ -39,13 +27,20 @@ class Box extends Meta
      * @var array
      */
     protected $fillable = array(
-        'id',
-        'callback',
         'title',
         'description',
         'fields',
         'context',
-        'priority',
+        'priority'
+    );
+
+    /**
+     * Attributes.
+     * @var array
+     */
+    protected $attributes = array(
+        'context'  => 'normal',
+        'priority' => 'default'
     );
 
     /**

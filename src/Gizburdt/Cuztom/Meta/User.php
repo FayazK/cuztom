@@ -19,7 +19,7 @@ class User extends Meta
      * Meta type.
      * @var string
      */
-    public $_meta_type = 'user';
+    public $meta_type = 'user';
 
     /**
      * Constructor for User Meta.
