@@ -22,22 +22,14 @@ class Image extends Field
     public $view = 'image';
 
     /**
-     * CSS class.
-     * @var string
-     */
-    public $css_class = 'cuztom-input-hidden';
-
-    /**
-     * Row CSS class.
-     * @var string
-     */
-    public $row_css_class = 'cuztom-field-image';
-
-    /**
-     * Data attributes.
+     * Attributes.
      * @var array
      */
-    public $data_attributes = array('media-type' => 'image');
+    protected $attributes = array(
+        'css_class'       => 'cuztom-input-hidden',
+        'row_css_class'   => 'cuztom-field-image',
+        'data_attributes' => array('media-type' => 'image')
+    );
 
     /**
      * Output column content.

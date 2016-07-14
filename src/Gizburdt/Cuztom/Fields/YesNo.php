@@ -25,14 +25,11 @@ class YesNo extends Field
     public $view = 'yes-no';
 
     /**
-     * CSS class.
-     * @var string
+     * Attributes.
+     * @var array
      */
-    public $css_class = 'cuztom-input-radio';
-
-    /**
-     * Row CSS class.
-     * @var string
-     */
-    public $row_css_class = 'cuztom-field-yesno';
+    protected $attributes = array(
+        'css_class'     => 'cuztom-input-radio',
+        'row_css_class' => 'cuztom-field-yesno'
+    );
 }

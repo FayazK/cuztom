@@ -10,16 +10,13 @@ Guard::directAccess();
 class Text extends Field
 {
     /**
-     * CSS class.
-     * @var string
+     * Attributes.
+     * @var array
      */
-    public $css_class = 'cuztom-input-text';
-
-    /**
-     * Row CSS class.
-     * @var string
-     */
-    public $row_css_class = 'cuztom-field-text';
+    protected $attributes = array(
+        'css_class'     => 'cuztom-input-text',
+        'row_css_class' => 'cuztom-field-text'
+    );
 
     /**
      * Parse value for HTML special chars.

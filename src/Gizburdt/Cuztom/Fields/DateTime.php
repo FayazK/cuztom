@@ -10,16 +10,13 @@ Guard::directAccess();
 class DateTime extends Field
 {
     /**
-     * CSS class.
-     * @var string
+     * Attributes.
+     * @var array
      */
-    public $css_class = 'cuztom-input-datetime datetimepicker js-cuztom-datetimepicker';
-
-    /**
-     * Row CSS class.
-     * @var string
-     */
-    public $row_css_class = 'cuztom-field-datetime';
+    protected $attributes = array(
+        'css_class'     => 'cuztom-input-datetime datetimepicker js-cuztom-datetimepicker',
+        'row_css_class' => 'cuztom-field-datetime'
+    );
 
     /**
      * Data attributes.

@@ -13,22 +13,25 @@ class MultiSelect extends Select
     use Selectable;
 
     /**
+     * After name.
+     * @var string
+     */
+    public $after_name = '[]';
+
+    /**
      * View name.
      * @var string
      */
     public $view = 'multi-select';
 
     /**
-     * CSS class.
-     * @var string
+     * Attributes.
+     * @var array
      */
-    public $css_class = 'cuztom-input-select cuztom-input-multi-select';
-
-    /**
-     * Row CSS class.
-     * @var string
-     */
-    public $row_css_class = 'cuztom-field-multi-select';
+    protected $attributes = array(
+        'css_class'     => 'cuztom-input-select cuztom-input-multi-select',
+        'row_css_class' => 'cuztom-field-multi-select'
+    );
 
     /**
      * Construct.
@@ -40,7 +43,8 @@ class MultiSelect extends Select
     {
         parent::__construct($args, $values);
 
-        $this->after_name          .= '[]';
-        $this->args['multiselect']  = true;
+        $this->args = array(
+            'multiselect' => true
+        );
     }
 }

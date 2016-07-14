@@ -1,8 +1,8 @@
 <input
     type="<?php echo $field->get_input_type(); ?>"
-    name="<?php echo $field->get_name(); ?>"
-    id="<?php echo $field->get_id(); ?>"
-    class="<?php echo $field->get_css_class(); ?>"
+    name="<?php echo $field->name; ?>"
+    id="<?php echo $field->id; ?>"
+    class="<?php echo $field->css_class; ?>"
     value="<?php echo $value; ?>"
-    <?php echo $field->get_data_attributes(); ?>
+    <?php echo $field->data_attributes; ?>
     />

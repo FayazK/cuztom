@@ -13,6 +13,12 @@ class Checkboxes extends Field
     use Checkables;
 
     /**
+     * After name.
+     * @var string
+     */
+    public $after_name = '[]';
+
+    /**
      * Css class.
      * @var string
      */
@@ -25,16 +31,13 @@ class Checkboxes extends Field
     public $view = 'checkboxes';
 
     /**
-     * Css class.
-     * @var string
+     * Attributes.
+     * @var array
      */
-    public $css_class = 'cuztom-input-checkbox';
-
-    /**
-     * Row CSS class.
-     * @var string
-     */
-    public $row_css_class = 'cuztom-field-checkboxes';
+    protected $attributes = array(
+        'css_class'     => 'cuztom-input-checkbox',
+        'row_css_class' => 'cuztom-field-checkboxes'
+    );
 
     /**
      * Construct.
@@ -47,6 +50,5 @@ class Checkboxes extends Field
         parent::__construct($args, $values);
 
         $this->default_value = (array) $this->default_value;
-        $this->after_name   .= '[]';
     }
 }

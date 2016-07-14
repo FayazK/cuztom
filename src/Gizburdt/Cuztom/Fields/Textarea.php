@@ -16,14 +16,11 @@ class Textarea extends Field
     public $view = 'textarea';
 
     /**
-     * CSS class.
-     * @var string
+     * Attributes.
+     * @var array
      */
-    public $css_class = 'cuztom-input-textarea';
-
-    /**
-     * Row CSS class.
-     * @var string
-     */
-    public $row_css_class = 'cuztom-field-textarea';
+    protected $attributes = array(
+        'css_class'     => 'cuztom-input-textarea',
+        'row_css_class' => 'cuztom-field-textarea'
+    );
 }

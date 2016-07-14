@@ -100,6 +100,7 @@ class Cuztom
         require_once self::$dir.'/Support/Ajax.php';
         require_once self::$dir.'/Support/Request.php';
         require_once self::$dir.'/Support/Response.php';
+        require_once self::$dir.'/Support/Traits/HandlesAttributes.php';
 
         // Entity
         require_once self::$dir.'/Entities/Entity.php';
@@ -147,6 +148,7 @@ class Cuztom
         require_once self::$dir.'/Fields/TaxonomySelect.php';
         require_once self::$dir.'/Fields/TaxonomyCheckboxes.php';
         require_once self::$dir.'/Fields/Hidden.php';
+        require_once self::$dir.'/Fields/Support/filters.php';
         require_once self::$dir.'/Fields/Support/filters.php';
     }
 
@@ -457,6 +459,19 @@ class Cuztom
     public static function starts_with($string, $start)
     {
         return substr($string, 0, 1) == $start;
+    }
+
+    /**
+     * Converts to studly Case.
+     *
+     * @param  string $value
+     * @return string
+     */
+    public static function studly_case($value)
+    {
+        $value = ucwords(str_replace(['-', '_'], ' ', $value));
+
+        return str_replace(' ', '', $value);
     }
 
     /**

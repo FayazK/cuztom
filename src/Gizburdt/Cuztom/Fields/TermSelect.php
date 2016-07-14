@@ -10,10 +10,12 @@ Guard::directAccess();
 class TermSelect extends Field
 {
     /**
-     * Row CSS class.
-     * @var string
+     * Attributes.
+     * @var array
      */
-    public $row_css_class = 'cuztom-field-term-select';
+    protected $attributes = array(
+        'row_css_class' => 'cuztom-field-term-select'
+    );
 
     /**
      * Construct field.

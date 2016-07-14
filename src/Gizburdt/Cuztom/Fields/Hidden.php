@@ -15,10 +15,12 @@ class Hidden extends Field
     public $input_type = 'hidden';
 
     /**
-     * Row CSS class.
-     * @var string
+     * Attributes.
+     * @var array
      */
-    public $row_css_class = 'cuztom-field-hidden';
+    protected $attributes = array(
+        'row_css_class' => 'cuztom-field-hidden'
+    );
 
     /**
      * Hidden field only needs the field.

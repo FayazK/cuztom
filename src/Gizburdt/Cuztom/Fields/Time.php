@@ -9,16 +9,13 @@ Guard::directAccess();
 class Time extends DateTime
 {
     /**
-     * CSS class.
-     * @var string
+     * Attributes.
+     * @var array
      */
-    public $css_class = 'cuztom-input-time timepicker js-cuztom-timepicker';
-
-    /**
-     * Row CSS class.
-     * @var string
-     */
-    public $row_css_class = 'cuztom-field-time';
+    protected $attributes = array(
+        'css_class'     => 'cuztom-input-time timepicker js-cuztom-timepicker',
+        'row_css_class' => 'cuztom-field-time'
+    );
 
     /**
      * UNIX time to string.

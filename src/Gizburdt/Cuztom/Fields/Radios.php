@@ -22,19 +22,16 @@ class Radios extends Field
      * Input type.
      * @var string
      */
-    public $_input_type = 'radio';
+    public $input_type = 'radio';
 
     /**
-     * CSS class.
-     * @var string
+     * Attributes.
+     * @var array
      */
-    public $css_class = 'cuztom-input-radio';
-
-    /**
-     * Row CSS class.
-     * @var string
-     */
-    public $row_css_class = 'cuztom-field-radios';
+    protected $attributes = array(
+        'css_class'     => 'cuztom-input-radio',
+        'row_css_class' => 'cuztom-field-radios'
+    );
 
     /**
      * Construct.
@@ -44,7 +41,7 @@ class Radios extends Field
      */
     public function __construct($args, $values = null)
     {
-        parent::__construct($values);
+        parent::__construct($args, $values);
 
         $this->default_value = (array) $this->default_value;
     }

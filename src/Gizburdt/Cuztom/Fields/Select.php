@@ -19,14 +19,11 @@ class Select extends Field
     public $view = 'select';
 
     /**
-     * CSS class.
-     * @var string
+     * Attributes.
+     * @var array
      */
-    public $css_class = 'cuztom-input-select';
-
-    /**
-     * Row CSS class.
-     * @var string
-     */
-    public $row_css_class = 'cuztom-field-select';
+    protected $attributes = array(
+        'css_class'     => 'cuztom-input-select',
+        'row_css_class' => 'cuztom-field-select'
+    );
 }

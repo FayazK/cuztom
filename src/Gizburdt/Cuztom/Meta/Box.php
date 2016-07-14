@@ -22,6 +22,15 @@ class Box extends Meta
     public $meta_type = 'post';
 
     /**
+     * Attributes.
+     * @var array
+     */
+    protected $attributes = array(
+        'context'  => 'normal',
+        'priority' => 'default'
+    );
+
+    /**
      * Fillable.
      *
      * @var array
@@ -32,15 +41,6 @@ class Box extends Meta
         'fields',
         'context',
         'priority'
-    );
-
-    /**
-     * Attributes.
-     * @var array
-     */
-    protected $attributes = array(
-        'context'  => 'normal',
-        'priority' => 'default'
     );
 
     /**
@@ -138,6 +138,7 @@ class Box extends Meta
      */
     public function add_column($columns)
     {
+        // @TODO: Without unset
         unset($columns['date']);
 
         foreach ($this->fields as $id => $field) {

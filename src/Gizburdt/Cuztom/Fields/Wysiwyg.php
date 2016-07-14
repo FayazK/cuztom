@@ -10,10 +10,12 @@ Guard::directAccess();
 class Wysiwyg extends Field
 {
     /**
-     * Row CSS class.
-     * @var string
+     * Attributes.
+     * @var array
      */
-    public $row_css_class = 'cuztom-field-wysiwyg';
+    protected $attributes = array(
+        'row_css_class' => 'cuztom-field-wysiwyg'
+    );
 
     /**
      * Output input.
@@ -25,13 +27,18 @@ class Wysiwyg extends Field
     public function _output_input($value = null, $view = null)
     {
         // Needs to be set here, to work with sortables
-        @$this->args['textarea_name'] = $this->get_name();
-        @$this->args['editor_class'] .= ' cuztom-input';
+        $args = array_merge(
+            array(
+                'textarea_name' => $this->get_name(),
+                'editor_class'  => 'cuztom-input'
+            ),
+            $this->args
+        );
 
         return wp_editor(
             (! Cuztom::is_empty($value) ? $value : $this->default_value),
             strtolower($this->get_id()),
-            $this->args
+            $args
         );
     }
 }

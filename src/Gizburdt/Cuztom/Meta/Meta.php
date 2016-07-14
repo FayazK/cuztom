@@ -5,20 +5,23 @@ namespace Gizburdt\Cuztom\Meta;
 use Gizburdt\Cuztom\Cuztom;
 use Gizburdt\Cuztom\Fields\Field;
 use Gizburdt\Cuztom\Support\Guard;
+use Gizburdt\Cuztom\Support\Traits\HandlesAttributes;
 
 Guard::directAccess();
 
 abstract class Meta
 {
+    use HandlesAttributes;
+
     /**
      * ID.
-     * @var [type]
+     * @var string
      */
     public $id;
 
     /**
      * Callback.
-     * @var [type]
+     * @var array|string
      */
     public $callback;
 
@@ -42,14 +45,20 @@ abstract class Meta
 
     /**
      * Attributes.
-     *
-     * @var [type]
+     * @var array
      */
     protected $attributes;
 
     /**
+     * Casts.
+     * @var array
+     */
+    protected $casts = array(
+        'fields' => 'array'
+    );
+
+    /**
      * Fillable.
-     *
      * @var array
      */
     protected $fillable = array(
@@ -129,22 +138,9 @@ abstract class Meta
      */
     public function save($object, $values)
     {
-        // Loop through each field
         foreach ($this->data as $id => $field) {
             $field->save($object, $values);
         }
-    }
-
-    /**
-     * Check what kind of meta we're dealing with.
-     *
-     * @param  string $meta_type
-     * @return bool
-     * @since  2.3
-     */
-    public function is_meta_type($meta_type)
-    {
-        return $this->_meta_type == $meta_type;
     }
 
     /**
@@ -177,27 +173,5 @@ abstract class Meta
         }
 
         return @$data;
-    }
-
-    /**
-     * Magic setter.
-     *
-     * @param string $name
-     * @param string $value
-     */
-    public function __set($name, $value)
-    {
-        $this->attributes[$name] = $value;
-    }
-
-    /**
-     * Magic getter.
-     *
-     * @param  string $name
-     * @return mixed
-     */
-    public function __get($name)
-    {
-        return isset($this->attributes[$name]) ? $this->attributes[$name] : null;
     }
 }

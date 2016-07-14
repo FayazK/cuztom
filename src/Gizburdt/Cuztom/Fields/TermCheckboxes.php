@@ -16,16 +16,18 @@ class TermCheckboxes extends Checkboxes
     public $view = 'term-checkboxes';
 
     /**
-     * Row CSS class.
-     * @var string
-     */
-    public $row_css_class = 'cuztom-field-term-checkboxes';
-
-    /**
      * Terms.
      * @var array
      */
     public $terms;
+
+    /**
+     * Attributes.
+     * @var array
+     */
+    protected $attributes = array(
+        'row_css_class' => 'cuztom-field-term-checkboxes'
+    );
 
     /**
      * Construct.

@@ -16,16 +16,13 @@ class TaxonomySelect extends Select
     public $view = 'taxonomy-select';
 
     /**
-     * CSS class.
-     * @var string
+     * Attributes.
+     * @var array
      */
-    public $css_class = 'cuztom-input-select cuztom-input-taxonomy-select';
-
-    /**
-     * Row CSS class.
-     * @var string
-     */
-    public $row_css_class = 'cuztom-field-taxonomy-select';
+    protected $attributes = array(
+        'css_class'     => 'cuztom-input-select cuztom-input-taxonomy-select',
+        'row_css_class' => 'cuztom-field-taxonomy-select'
+    );
 
     /**
      * Construct.

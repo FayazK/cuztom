@@ -1,8 +1,4 @@
-<?php
-
-use Gizburdt\Cuztom\Cuztom;
-
-?>
+<?php use Gizburdt\Cuztom\Cuztom; ?>
 
 <div class="cuztom-checkboxes-wrap cuztom-radios-wrap">
     <?php if (is_array($field->options)) : ?>

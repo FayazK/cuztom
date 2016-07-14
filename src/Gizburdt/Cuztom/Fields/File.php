@@ -22,16 +22,13 @@ class File extends Field
     public $view = 'file';
 
     /**
-     * CSS class.
-     * @var string
+     * Attributes.
+     * @var array
      */
-    public $css_class = 'cuztom-input-hidden';
-
-    /**
-     * Row CSS class.
-     * @var string
-     */
-    public $row_css_class = 'cuztom-field-file';
+    protected $attributes = array(
+        'css_class'     => 'cuztom-input-hidden',
+        'row_css_class' => 'cuztom-field-file'
+    );
 
     /**
      * Data attributes.

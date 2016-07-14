@@ -5,34 +5,20 @@ namespace Gizburdt\Cuztom\Fields;
 use Gizburdt\Cuztom\Cuztom;
 use Gizburdt\Cuztom\Field\Accordion;
 use Gizburdt\Cuztom\Support\Guard;
+use Gizburdt\Cuztom\Support\Traits\HandlesAttributes;
 
 Guard::directAccess();
 
 abstract class Field
 {
+    use HandlesAttributes;
+
     /**
      * Fillables.
      *
      * @var mixed
      */
-    public $id                    = null;
-    public $type                  = null;
-    public $label                 = '';
-    public $description           = '';
-    public $explanation           = '';
-    public $default_value         = '';
-    public $options               = array();
-    public $args                  = array();
-    public $required              = false;
-    public $repeatable            = false;
-    public $limit                 = null;
-    public $ajax                  = false;
-    public $data_attributes       = array();
-    public $css_class             = '';
-    public $row_css_class         = '';
-    public $show_admin_column     = false;
-    public $admin_column_sortable = false;
-    public $admin_column_filter   = false;
+    public $id = null;
 
     /**
      * Before/after id/name.
@@ -56,13 +42,20 @@ abstract class Field
     public $input_type = 'text';
 
     /**
-     * Supports.
-     *
-     * @var mixeds
+     * Attributes.
+     * @var array
      */
-    protected $_supports_repeatable = true;
-    protected $_supports_bundle     = true;
-    protected $_supports_ajax       = true;
+    protected $attributes;
+
+    /**
+     * Casts.
+     * @var array
+     */
+    protected $casts = array(
+        'args'            => 'array',
+        'options'         => 'array',
+        'data_attributes' => 'array',
+    );
 
     /**
      * Fillable by user.
@@ -106,11 +99,9 @@ abstract class Field
      */
     public function __construct($args, $values = null)
     {
-        // Set all properties
-        foreach ($this->fillable as $property) {
-            if (property_exists($this, $property)) {
-                $this->$property = (isset($args[$property]) ? $args[$property] : $this->$property);
-            }
+        // Set all attributes
+        foreach ($this->fillable as $attribute) {
+            $this->$attribute = isset($args[$attribute]) ? $args[$attribute] : @$this->attributes[$attribute];
         }
 
         // Repeatable?
@@ -168,7 +159,7 @@ abstract class Field
      */
     public function _output($value = null)
     {
-        return $this->_output_input($value).$this->get_explanation();
+        return $this->_output_input($value).$this->explanation;
     }
 
     /**
@@ -282,7 +273,7 @@ abstract class Field
      */
     public function save($object, $values)
     {
-        $value = $this->parse_value($values[$this->id]);
+        $value = $this->parse_value(@$values[$this->id]);
 
         // Save to respective content-type
         switch ($this->meta_type) {
@@ -335,7 +326,7 @@ abstract class Field
      * @return string
      * @since  3.0
      */
-    public function get_id($extra = null)
+    public function getIdAttribute($extra = null)
     {
         return apply_filters('cuztom_field_id', $this->before_id.$this->id.$this->after_id, $this, $extra);
     }
@@ -346,7 +337,7 @@ abstract class Field
      * @return string
      * @since  3.0
      */
-    public function get_name()
+    public function getNameAttribute()
     {
         return apply_filters('cuztom_field_name', 'cuztom'.$this->before_name.'['.$this->id.']'.$this->after_name, $this);
     }
@@ -358,9 +349,9 @@ abstract class Field
      * @return string
      * @since  2.4
      */
-    public function get_css_class($extra = null)
+    public function getCssClassAttribute($extra = null)
     {
-        return apply_filters('cuztom_field_css_class', 'cuztom-input '.$this->css_class, $this, $extra);
+        return apply_filters('cuztom_field_css_class', 'cuztom-input '.$this->attributes['css_class'], $this, $extra);
     }
 
     /**
@@ -370,9 +361,9 @@ abstract class Field
      * @return string
      * @since  3.0
      */
-    public function get_row_css_class($extra = null)
+    public function getRowCssClassAttribute($extra = null)
     {
-        return apply_filters('cuztom_field_row_css_class', 'cuztom-field js-cuztom-field '.$this->row_css_class, $this, $extra);
+        return apply_filters('cuztom_field_row_css_class', 'cuztom-field js-cuztom-field '.$this->attributes['row_css_class'], $this, $extra);
     }
 
     /**
@@ -381,7 +372,7 @@ abstract class Field
      * @return string
      * @since  2.4
      */
-    public function get_explanation()
+    public function getExplanationAttribtue()
     {
         return apply_filters('cuztom_field_explanation', (! $this->is_repeatable() && $this->explanation ? '<em class="cuztom-field-explanation">'.$this->explanation.'</em>' : ''), $this);
     }
@@ -393,13 +384,17 @@ abstract class Field
      * @return string
      * @since  2.4
      */
-    public function get_data_attributes($extra = array())
+    public function getDataAttributesAttribute($extra = array())
     {
-        foreach (array_merge($this->data_attributes, $extra) as $attribute => $value) {
-            if (! is_null($value)) {
-                @$output .= ' data-'.$attribute.'="'.$value.'"';
-            } elseif (! $value && isset($this->args[Cuztom::uglify($attribute)])) {
-                @$output .= 'data-'.$attribute.'="'.$this->args[Cuztom::uglify($attribute)].'"';
+        $attributes = $this->attributes['data_attributes'];
+
+        if (is_array($attributes)) {
+            foreach (array_merge($attributes, $extra) as $attribute => $value) {
+                if (! is_null($value)) {
+                    @$output .= ' data-'.$attribute.'="'.$value.'"';
+                } elseif (! $value && isset($this->args[Cuztom::uglify($attribute)])) {
+                    @$output .= 'data-'.$attribute.'="'.$this->args[Cuztom::uglify($attribute)].'"';
+                }
             }
         }
 
@@ -443,7 +438,7 @@ abstract class Field
      */
     public function is_ajax()
     {
-        return $this->ajax && $this->_supports_ajax;
+        return $this->ajax;
     }
 
     /**
@@ -454,7 +449,7 @@ abstract class Field
      */
     public function is_repeatable()
     {
-        return $this->repeatable && $this->_supports_repeatable;
+        return $this->repeatable;
     }
 
     /**
@@ -497,6 +492,11 @@ abstract class Field
             return $this->default_value;
         }
     }
+
+    // public function build()
+    // {
+    //     return $this;
+    // }
 
     /**
      * Creates and returns a field object.
